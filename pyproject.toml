@@ -1,0 +1,27 @@
+[project]
+name = "searchcast-toto-benchmark"
+version = "0.1.0"
+description = "Reproducible Toto-2 vs SearchCast time-series forecasting benchmark (AI Horizon Forecast)."
+readme = "README.md"
+requires-python = ">=3.12"
+
+# Top-level dependencies only. The exact resolution (transitive versions, hashes,
+# per-platform wheels) lives in uv.lock, which is the source of truth. Reproduce the
+# environment with `uv sync`; requirements-lock.txt is a pip fallback exported from
+# this same lock (see toto_M256_run/README.md).
+#
+# torch is pinned to the CPU/MPS build on PyPI (every shipped result is CPU/float32).
+# GPU users (e.g. Colab T4 for the larger Toto sizes) should install a CUDA build of
+# the same torch version over the top, e.g.
+#   uv pip install torch==2.13.0 --index-url https://download.pytorch.org/whl/cu124
+dependencies = [
+    "toto-2==2.0.0",
+    "torch==2.13.0",
+    "numpy==2.4.6",
+    "pandas==2.3.3",
+    "scikit-learn==1.9.0",
+    "optuna==4.9.0",
+    "matplotlib==3.11.0",
+    "notebook>=7",
+    "ipykernel>=6",
+]

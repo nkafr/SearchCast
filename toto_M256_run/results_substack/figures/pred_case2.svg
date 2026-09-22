@@ -1,0 +1,51 @@
+<svg width="100%" viewBox="0 0 680 372" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>Case 2: one model applied to all its 2,833 windows in one matmul</title>
+<desc>Model 1 (blue) predicts horizons 1 to 48 and has 2,833 windows. Each window is a context of L past steps followed by a 48-step blue forecast. All 2,833 windows are computed in a single matmul: X (2833 by L) times W-transpose (L by 48) equals predictions (2833 by 48). This blue block is one of the 15 tiles in Case 1.</desc>
+<style>
+  :root{ --text:#1c1c1c; --muted:#5b5b5b; --border:#c2c2c2; --m1:#3598ec; --mg:#9a9a9a; }
+  @media (prefers-color-scheme: dark){
+    :root{ --text:#e7e7e7; --muted:#a2a2a2; --border:#4a4a4a; --m1:#5aa9f0; --mg:#7a7a7a; }
+  }
+  text{ font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; fill: var(--text); }
+  .th{ font-size:14px; font-weight:500; }
+  .t { font-size:14px; font-weight:400; }
+  .ts{ font-size:12px; font-weight:400; fill: var(--muted); }
+  .wt{ font-size:14px; font-weight:500; fill:#ffffff; }
+  .ws{ font-size:12px; font-weight:400; fill:#ffffff; }
+  .lead{ stroke: var(--muted); stroke-width:0.8; stroke-dasharray:3 3; fill:none; }
+</style>
+<text class="th" x="40" y="40">Case 2: One model, applied to all its windows at once</text>
+<rect x="40" y="54" width="14" height="14" rx="2" fill="var(--m1)" fill-opacity="0.9"/>
+<text class="ts" x="62" y="65">model 1 predicts horizons 1&#8211;48 (the first 48-step slice)</text>
+<text class="ts" x="40" y="88">Model 1 has N = 2,880 &#8722; 48 + 1 = 2,833 windows, one per origin (stride 1).</text>
+<text class="ts" x="40" y="116">Each window is a context of L past steps, then model 1&#8217;s 48-step forecast (blue):</text>
+<text class="ts" x="140" y="136" text-anchor="middle">context (L steps)</text>
+<text class="ts" x="260" y="136" text-anchor="middle">48 steps</text>
+<line class="lead" x1="240" y1="140" x2="240" y2="218"/>
+<rect x="40"  y="142" width="200" height="18" rx="2" fill="var(--mg)" fill-opacity="0.35" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="240" y="142" width="40"  height="18" rx="2" fill="var(--m1)" fill-opacity="0.9"  stroke="var(--border)" stroke-width="0.5"/>
+<text class="ts" x="288" y="155">window 1 &#183; origin 11,520 &#8594; predicts 11,520&#8211;11,568</text>
+<rect x="40"  y="164" width="200" height="18" rx="2" fill="var(--mg)" fill-opacity="0.35" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="240" y="164" width="40"  height="18" rx="2" fill="var(--m1)" fill-opacity="0.9"  stroke="var(--border)" stroke-width="0.5"/>
+<text class="ts" x="288" y="177">window 2 &#183; origin 11,521 &#8594; predicts 11,521&#8211;11,569</text>
+<text class="t"  x="140" y="196" text-anchor="middle">&#8942;</text>
+<text class="ts" x="288" y="196">2,830 more windows</text>
+<rect x="40"  y="200" width="200" height="18" rx="2" fill="var(--mg)" fill-opacity="0.35" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="240" y="200" width="40"  height="18" rx="2" fill="var(--m1)" fill-opacity="0.9"  stroke="var(--border)" stroke-width="0.5"/>
+<text class="ts" x="288" y="213">window 2,833 &#183; origin 14,352 &#8594; predicts 14,352&#8211;14,400</text>
+<text class="ts" x="40" y="238">The dashed line is each window&#8217;s origin: context to its left, model 1&#8217;s 48-step output (blue) to its right.</text>
+<text class="th" x="40" y="266">All 2,833 of these are one matmul, not a Python loop:</text>
+<rect x="40" y="278" width="96" height="48" rx="4" fill="var(--mg)" fill-opacity="0.35" stroke="var(--border)" stroke-width="0.5"/>
+<text class="th" x="88" y="302" text-anchor="middle">X</text>
+<text class="ts" x="88" y="318" text-anchor="middle">2,833 &#215; L</text>
+<text class="t"  x="146" y="307" text-anchor="middle">&#183;</text>
+<rect x="156" y="278" width="80" height="48" rx="4" fill="var(--m1)" fill-opacity="0.9" stroke="var(--border)" stroke-width="0.5"/>
+<text class="wt" x="196" y="302" text-anchor="middle">W&#7488;</text>
+<text class="ws" x="196" y="318" text-anchor="middle">L &#215; 48</text>
+<text class="t"  x="246" y="307" text-anchor="middle">=</text>
+<rect x="258" y="278" width="122" height="48" rx="4" fill="var(--m1)" fill-opacity="0.9" stroke="var(--border)" stroke-width="0.5"/>
+<text class="wt" x="319" y="302" text-anchor="middle">predictions</text>
+<text class="ws" x="319" y="318" text-anchor="middle">2,833 &#215; 48</text>
+<text class="ts" x="40" y="346">This blue block is model 1&#8217;s slice, one of the 15 tiles in Case 1, computed here for every window at once.</text>
+<text class="ts" x="40" y="362">Case 1 = one window across 15 models. Case 2 = one model across all its windows.</text>
+</svg>

@@ -18,3 +18,25 @@ env/
 
 # OS / editor
 .DS_Store
+
+development/
+
+# Electricity + Traffic data (large-channel extension, not shipped, too big for GitHub)
+data/electricity.csv
+data/LD2011_2014.txt
+data/traffic.csv
+
+# Dev tooling / resources for subscribers (kept out of the public reproduction repo)
+toto_M256_run/scripts_substack/build_notebook.py
+toto_M256_run/traffic_electricity.py
+toto_M256_run/scripts_substack/draw_case1.py
+toto_M256_run/scripts_substack/draw_case2.py
+
+# The full guided notebooks lives in AI Projects for subscribers (Project 37)
+# Link: https://aihorizonforecast.substack.com/p/ai-projects
+toto_M256_run/NOTEBOOK.ipynb
+toto_M256_run/traffic_electricity.ipynb
+
+# The SearchCast explainer docs are in AI Projects for subscribers (Project 37)
+toto_M256_run/scripts_substack/SEARCHCAST_EXPLAINED.md
+toto_M256_run/scripts_substack/SEARCHCAST_EXPLAINED_SHORT.md

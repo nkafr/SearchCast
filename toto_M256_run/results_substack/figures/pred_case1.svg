@@ -1,0 +1,121 @@
+<svg width="100%" viewBox="0 0 680 532" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>How SearchCast tiles one ETTh1 forecast with 15 models, and why N shrinks with the horizon</title>
+<desc>The train/val/test split, then four windows (N=1, N=2, the last full window N=2161, and the overflow N=2162) each showing the 720-step horizon tiled by 15 models of 48 steps. Model 1 blue, model 2 teal, model 15 amber, models 3 to 14 gray. In the overflow window model 15 has no ground truth. The window count 2161 is boxed both at the last full window and in the H=720 tensor shape.</desc>
+<style>
+  :root{ --text:#1c1c1c; --muted:#5b5b5b; --border:#c2c2c2;
+         --m1:#3598ec; --m2:#2fa89a; --m15:#e0912f; --mg:#9a9a9a; --danger:#d1453b; --hl:#8a7fb5; }
+  @media (prefers-color-scheme: dark){
+    :root{ --text:#e7e7e7; --muted:#a2a2a2; --border:#4a4a4a;
+           --m1:#5aa9f0; --m2:#45c2b1; --m15:#e8b65e; --mg:#7a7a7a; --danger:#e37b72; --hl:#a99cd6; }
+  }
+  text{ font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; fill: var(--text); }
+  .th{ font-size:14px; font-weight:500; }
+  .t { font-size:14px; font-weight:400; }
+  .ts{ font-size:12px; font-weight:400; fill: var(--muted); }
+  .tss{ font-size:11px; font-weight:400; fill: var(--muted); }
+  .lead{ stroke: var(--muted); stroke-width:0.6; stroke-dasharray:3 3; fill:none; }
+</style>
+<text class="th" x="40" y="50">ETTh1: 14,400 steps, split in time order</text>
+<rect x="40"  y="58" width="360" height="24" rx="4" fill="none" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="400" y="58" width="120" height="24" rx="4" fill="none" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="520" y="58" width="120" height="24" rx="4" fill="var(--mg)" fill-opacity="0.40" stroke="var(--border)" stroke-width="0.5"/>
+<text class="ts" x="220" y="74" text-anchor="middle">train</text>
+<text class="ts" x="460" y="74" text-anchor="middle">val</text>
+<text class="th" x="580" y="74" text-anchor="middle">test</text>
+<line x1="40" y1="82" x2="40" y2="88" stroke="var(--muted)" stroke-width="0.6"/>
+<line x1="400" y1="82" x2="400" y2="88" stroke="var(--muted)" stroke-width="0.6"/>
+<line x1="520" y1="82" x2="520" y2="88" stroke="var(--muted)" stroke-width="0.6"/>
+<line x1="640" y1="82" x2="640" y2="88" stroke="var(--muted)" stroke-width="0.6"/>
+<text class="ts" x="40"  y="98">0</text>
+<text class="ts" x="400" y="98" text-anchor="middle">8,640</text>
+<text class="ts" x="520" y="98" text-anchor="middle" fill="var(--text)" font-weight="500">11,520</text>
+<text class="ts" x="640" y="98" text-anchor="end">14,400</text>
+<rect x="40"  y="110" width="14" height="12" rx="2" fill="var(--m1)"  fill-opacity="0.9"/><text class="ts" x="58"  y="120">model 1</text>
+<rect x="130" y="110" width="14" height="12" rx="2" fill="var(--m2)"  fill-opacity="0.9"/><text class="ts" x="148" y="120">model 2</text>
+<rect x="220" y="110" width="14" height="12" rx="2" fill="var(--m15)" fill-opacity="0.9"/><text class="ts" x="238" y="120">model 15</text>
+<rect x="320" y="110" width="14" height="12" rx="2" fill="var(--mg)"  fill-opacity="0.4"/><text class="ts" x="338" y="120">models 3&#8211;14</text>
+<text class="ts" x="40" y="144">Each window forecasts these 720 steps from its origin, then slides one step (stride 1):</text>
+<text class="ts" x="40" y="164">window N = 1 &#183; origin 11,520 &#183; covers 11,520&#8211;12,240</text>
+<rect x="40" y="170" width="40" height="28" rx="2" fill="var(--m1)" fill-opacity="0.9" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="80" y="170" width="40" height="28" rx="2" fill="var(--m2)" fill-opacity="0.9" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="120" y="170" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="160" y="170" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="200" y="170" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="240" y="170" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="280" y="170" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="320" y="170" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="360" y="170" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="400" y="170" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="440" y="170" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="480" y="170" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="520" y="170" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="560" y="170" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="600" y="170" width="40" height="28" rx="2" fill="var(--m15)" fill-opacity="0.9" stroke="var(--border)" stroke-width="0.5"/>
+<text class="tss" x="60" y="210" text-anchor="middle">steps</text>
+<text class="tss" x="60" y="222" text-anchor="middle">1&#8211;48</text>
+<text class="tss" x="100" y="210" text-anchor="middle">steps</text>
+<text class="tss" x="100" y="222" text-anchor="middle">49&#8211;96</text>
+<text class="tss" x="616" y="210" text-anchor="middle">steps</text>
+<text class="tss" x="616" y="222" text-anchor="middle">673&#8211;720</text>
+<text class="ts" x="40" y="234">window N = 2 &#183; origin 11,521 &#183; covers 11,521&#8211;12,241 (slid +1)</text>
+<rect x="40" y="240" width="40" height="28" rx="2" fill="var(--m1)" fill-opacity="0.9" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="80" y="240" width="40" height="28" rx="2" fill="var(--m2)" fill-opacity="0.9" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="120" y="240" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="160" y="240" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="200" y="240" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="240" y="240" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="280" y="240" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="320" y="240" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="360" y="240" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="400" y="240" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="440" y="240" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="480" y="240" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="520" y="240" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="560" y="240" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="600" y="240" width="40" height="28" rx="2" fill="var(--m15)" fill-opacity="0.9" stroke="var(--border)" stroke-width="0.5"/>
+<text class="t"  x="120" y="286" text-anchor="middle">&#8942;</text>
+<text class="ts" x="150" y="286">2,158 more windows, each slid one more step</text>
+<rect x="34" y="298" width="612" height="54" rx="6" fill="none" stroke="var(--hl)" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text class="ts" x="40" y="314">window N = 2,161 &#183; origin 13,680 &#183; covers 13,680&#8211;14,400 (last full window)</text>
+<rect x="40" y="320" width="40" height="28" rx="2" fill="var(--m1)" fill-opacity="0.9" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="80" y="320" width="40" height="28" rx="2" fill="var(--m2)" fill-opacity="0.9" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="120" y="320" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="160" y="320" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="200" y="320" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="240" y="320" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="280" y="320" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="320" y="320" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="360" y="320" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="400" y="320" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="440" y="320" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="480" y="320" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="520" y="320" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="560" y="320" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="600" y="320" width="40" height="28" rx="2" fill="var(--m15)" fill-opacity="0.9" stroke="var(--border)" stroke-width="0.5"/>
+<text class="ts" x="40" y="374">window N = 2,162 &#183; origin 13,681 &#183; would cover 13,681&#8211;14,401 (overflow)</text>
+<rect x="40" y="380" width="40" height="28" rx="2" fill="var(--m1)" fill-opacity="0.9" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="80" y="380" width="40" height="28" rx="2" fill="var(--m2)" fill-opacity="0.9" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="120" y="380" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="160" y="380" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="200" y="380" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="240" y="380" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="280" y="380" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="320" y="380" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="360" y="380" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="400" y="380" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="440" y="380" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="480" y="380" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="520" y="380" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="560" y="380" width="40" height="28" rx="2" fill="var(--mg)" fill-opacity="0.4" stroke="var(--border)" stroke-width="0.5"/>
+<rect x="600" y="380" width="40" height="28" rx="2" fill="none" stroke="var(--danger)" stroke-width="1" stroke-dasharray="3 2"/>
+<text class="t" x="620" y="399" text-anchor="middle" fill="var(--danger)">&#10007;</text>
+<text class="ts" x="40" y="424">Model 15 needs step 14,401, past the test end, so this origin drops out of the H=720 tensor.</text>
+<text class="ts" x="40" y="440">Shorter horizons still keep it, so the window count N differs per cutoff:</text>
+<text class="ts" x="40" y="466">H=96 &#8594; (2785, 7, 96)     H=192 &#8594; (2689, 7, 192)     H=336 &#8594; (2545, 7, 336)</text>
+<text class="ts" x="93" y="486" text-anchor="end">H=720 &#8594; (</text>
+<rect x="93" y="475" width="30" height="16" rx="3" fill="none" stroke="var(--hl)" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text class="ts" x="108" y="486" text-anchor="middle" fill="var(--hl)" font-weight="500">2161</text>
+<text class="ts" x="125" y="486">, 7, 720)</text>
+<text class="ts" x="40" y="510">Both dotted boxes mark the same 2,161: the last full window is the H=720 window count.</text>
+<text class="ts" x="40" y="526">One channel shown. All 7 channels share the same 15 models (pooling).</text>
+</svg>
